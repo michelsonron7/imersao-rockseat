@@ -18,37 +18,37 @@ import com.michelsonroncete.certification_java.modules.questions.repositories.Qu
 @RestController
 @RequestMapping("/questions")
 public class QuestionController {
-	
-	@Autowired
-	private QuestionRepository questionRepository;
 
-	@GetMapping("/technology/{technology}")
-	public List<QuestionResultDTO> findByTechnology(@PathVariable String technology){
-		System.out.println("TECH ===" + technology);
-		var result = this.questionRepository.findByTechnology(technology);
-		
-		var toMap = result.stream().map(question -> mapQuestionToDto(question))
-		.collect(Collectors.toList());
-		return toMap;
-	}
-	
-	static QuestionResultDTO mapQuestionToDto(QuestionEntity question) {
-		var questionResultDto = QuestionResultDTO.builder()
-				.id(question.getId())
-				.technology(question.getTechnology())
-				.description(question.getDescription()).build();
-		
-		List<AlternativesResultDTO> alternativesResultDtos = question.getAlternatives()
-				.stream().map(alternative -> mapAlternativeDto(alternative))
-				.collector(Collectors.toList());
-		
-		questionResultDto.setAlternatives(alternativesResultDtos);
-		return questionResultDto;
-	}
-	
-	static AlternativesResultDTO mapAlternativesDto(AlternativesEntity alternativesResultDto) {
-		return AlternativesResultDTO.builder()
-				.id(alternativesResultDto.getId())
-				.description(alternativesResultDto.getDescription()).build();
+    @Autowired
+    private QuestionRepository questionRepository;
+
+    @GetMapping("/technology/{technology}")
+    public List<QuestionResultDTO> findByTechnology(@PathVariable String technology) {
+        System.out.println("TECH === " + technology);
+        var result = this.questionRepository.findByTechnology(technology);
+
+        var toMap = result.stream().map(question -> mapQuestionToDTO(question))
+                .collect(Collectors.toList());
+        return toMap;
+    }
+
+    static QuestionResultDTO mapQuestionToDTO(QuestionEntity question) {
+        var questionResultDTO = QuestionResultDTO.builder()
+                .id(question.getId())
+                .technology(question.getTechnology())
+                .description(question.getDescription()).build();
+
+        List<AlternativesResultDTO> alternativesResultDTOs = question.getAlternatives()
+                .stream().map(alternative -> mapAlternativeDTO(alternative))
+                .collect(Collectors.toList());
+
+        questionResultDTO.setAlternatives(alternativesResultDTOs);
+        return questionResultDTO;
+    }
+
+    static AlternativesResultDTO mapAlternativeDTO(AlternativesEntity alternativesResultDTO) {
+        return AlternativesResultDTO.builder()
+                .id(alternativesResultDTO.getId())
+                .description(alternativesResultDTO.getDescrString()).build();
 	}
 }

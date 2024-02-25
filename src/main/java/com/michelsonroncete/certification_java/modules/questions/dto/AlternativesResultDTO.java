@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class AlternativesResultDTO {
-	
-	private UUID id;
-	private String description;
+
+    private UUID id;
+    private String description;
 }
